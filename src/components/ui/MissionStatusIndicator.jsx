@@ -2,13 +2,15 @@ import { STATUS } from '@/constants/status'
 
 /**
  * MissionStatusIndicator — a glowing dot plus the overall mission state.
- * Props: status ('healthy' | 'warning' | 'emergency').
+ * Props: status ('healthy' | 'warning' | 'emergency' | 'unknown').
+ * 'unknown' means no data yet (loading or a failed request); it is shown in neutral grey.
  * It only DISPLAYS a status it is given. Deciding the status is a later stage.
  */
 const MISSION_STATES = {
   healthy:   { label: 'Nominal',   dot: 'bg-healthy',   text: 'text-healthy' },
   warning:   { label: 'Caution',   dot: 'bg-warning',   text: 'text-warning' },
   emergency: { label: 'Emergency', dot: 'bg-emergency', text: 'text-emergency' },
+  unknown:   { label: 'No data',   dot: 'bg-ink-muted', text: 'text-ink-muted' },
 }
 
 export default function MissionStatusIndicator({ status = STATUS.HEALTHY }) {
@@ -20,7 +22,7 @@ export default function MissionStatusIndicator({ status = STATUS.HEALTHY }) {
       className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm"
     >
       <span className="relative flex h-2.5 w-2.5">
-        <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 ${s.dot}`} />
+        {status !== 'unknown' && <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 ${s.dot}`} />}
         <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${s.dot}`} />
       </span>
       <span className="hidden text-ink-muted sm:inline">Mission</span>

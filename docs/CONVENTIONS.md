@@ -6,7 +6,7 @@
 | Frontend | Vite + React | installed |
 | Styling | Tailwind CSS | installed |
 | Language | JavaScript (no TypeScript) | n/a |
-| Charts | Recharts | `npm i recharts` when first chart is built |
+| Charts | Recharts | installed (Mission Control dashboard) |
 | 3D body | Three.js | `npm i three` when the 3D stage starts |
 | Backend | Python + FastAPI | not started |
 | AI logic | Python + scikit-learn (inside the backend) | not started |
@@ -14,6 +14,12 @@
 | Initial data | Simulated | not started |
 
 Install a package only in the stage that uses it.
+
+## Mock data
+`src/services/missionService.js` serves simulated data from `src/services/mock/` by default. Set `VITE_USE_MOCK_DATA=false` to call the real API. In mock mode, add `?sim=error`, `?sim=error:risk,alerts`, `?sim=empty` or `?sim=slow` to a page address to test error, empty and loading states.
+
+## Tests
+`npm test` runs the unit tests with Node's built-in runner (`*.test.js` next to the code). Files in `constants`, `utils` and `services/mock` use relative imports with `.js` extensions so Node can load them without Vite.
 
 ## Folders (`src/`)
 | Folder | Put here |

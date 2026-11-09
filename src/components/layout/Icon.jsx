@@ -12,6 +12,11 @@ const PATHS = {
   settings: <><path d="M4 7h10M18 7h2M4 17h2M10 17h10" /><circle cx="16" cy="7" r="2" /><circle cx="8" cy="17" r="2" /></>,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="M6 6l12 12M18 6L6 18" />,
+  info: <><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></>,
+  warning: <><path d="M12 3.5l9.5 16.5h-19z" /><path d="M12 10v4.5M12 17.5h.01" /></>,
+  emergency: <><path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7z" /><path d="M12 8v5M12 16h.01" /></>,
+  check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
+  refresh: <><path d="M20 11a8 8 0 0 0-14.6-4M4 5v4h4" /><path d="M4 13a8 8 0 0 0 14.6 4M20 19v-4h-4" /></>,
 }
 
 export default function Icon({ name, className = 'h-5 w-5' }) {
