@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { color-scheme: dark; }
+  body {
+    @apply bg-space font-sans text-ink antialiased;
+    background-image:
+      radial-gradient(60rem 30rem at 85% -10%, rgba(0,212,255,0.10), transparent 60%),
+      radial-gradient(40rem 25rem at -10% 110%, rgba(0,255,156,0.06), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { @apply font-display; }
+  :focus-visible { @apply outline outline-2 outline-offset-2 outline-primary; }
+}
+
+@layer components {
+  /* The one glassmorphism recipe. Use via <GlassCard>, not by copy-pasting. */
+  .glass {
+    @apply rounded-card border border-white/10 bg-white/[0.04] backdrop-blur-xl;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.35);
+  }
+  .telemetry { @apply font-mono tabular-nums; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
