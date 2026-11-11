@@ -7,6 +7,7 @@ import VitalsPage from '@/pages/VitalsPage'
 import DigitalTwinPage from '@/pages/DigitalTwinPage'
 import AlertsPage from '@/pages/AlertsPage'
 import AiInsightsPage from '@/pages/AiInsightsPage'
+import EmergencySimulationPage from '@/pages/EmergencySimulationPage'
 import SettingsPage from '@/pages/SettingsPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/digital-twin" element={<DigitalTwinPage />} />
           <Route path="/alerts" element={<AlertsPage />} />
           <Route path="/ai-insights" element={<AiInsightsPage />} />
+          <Route path="/emergency-simulation" element={<EmergencySimulationPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
 
