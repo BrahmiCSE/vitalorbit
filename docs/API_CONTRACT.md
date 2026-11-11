@@ -63,18 +63,41 @@ Units: heartRate bpm · spo2 % · respiratoryRate breaths/min · bloodPressure m
 ```
 `score` is 0–100 (higher = riskier).
 
+`anomalies` is optional (added for the Mission Control dashboard). When present, each item is:
+```json
+{ "metric": "spo2", "label": "SpO2", "kind": "threshold", "severity": "warning",
+  "observed": 93, "unit": "%", "expected": "95 % or higher",
+  "explanation": "Blood oxygen saturation is below the expected range." }
+```
+`kind` is `threshold` (outside the normal range) or `trend` (changing fast but still in range). `severity` uses the alert severity values. `unit` may be an empty string. If `anomalies` is missing, the dashboard falls back to showing `factors`.
+
+**Mission** (added for the Mission Control dashboard)
+```json
+{ "id": "msn_001", "name": "Orbital Station Alpha, Expedition 7", "vehicle": "Orbital Station Alpha",
+  "phase": "On-orbit operations", "launchDate": "2026-09-10T00:00:00Z",
+  "plannedEndDate": "2027-03-09T00:00:00Z", "source": "simulated" }
+```
+The frontend works out mission day, length and progress from `launchDate` and `plannedEndDate`.
+
+**Health score** is not an API field. The dashboard calculates it in the browser from a `VitalReading` (`src/utils/healthScore.js`, limits in `src/constants/vitals.js`). 0–100, higher is healthier. It is separate from the AI `RiskAssessment.score`.
+
 ## 4. Endpoints
 
 | Method | Path | Returns |
 |---|---|---|
+| GET | `/mission` | `Mission` |
 | GET | `/astronauts` | `Astronaut[]` |
 | GET | `/astronauts/:id` | `Astronaut` |
 | GET | `/astronauts/:id/vitals/latest` | `VitalReading` |
-| GET | `/astronauts/:id/vitals?from=&to=&page=&pageSize=` | `VitalReading[]` + `meta` |
+| GET | `/astronauts/:id/vitals?from=&to=&step=&page=&pageSize=` | `VitalReading[]` + `meta` |
 | POST | `/astronauts/:id/vitals` | `VitalReading` (body: a VitalReading without `astronautId`) |
 | GET | `/astronauts/:id/risk` | `RiskAssessment` |
 | GET | `/alerts?status=open&severity=` | `Alert[]` |
 | POST | `/alerts/:id/acknowledge` | `Alert` |
+
+`step` is optional: return one reading every `step` seconds (downsampled) instead of every raw reading. The dashboard trend chart uses it (60 for 1 hour, 300 for 6 hours, 900 for 24 hours). `pageSize` returns the newest readings, oldest first.
+
+`/alerts` accepts `status=open|acknowledged` (omit for both). Acknowledging an alert that no longer exists returns `NOT_FOUND`.
 
 ## 5. Backend notes (Python + FastAPI)
 
